@@ -51,13 +51,6 @@ export default {
       });
     }
   },
-  async logout(request: Request, response: Response) {
-    return dump({
-      codeParam: 201,
-      jsonParam: {},
-      response,
-    });
-  },
 
   async registry(request: Request, response: Response) {
     const { email, password, name } = request.body;

@@ -5,5 +5,5 @@ export default function checkSession(
   response: Response,
   next: NextFunction
 ) {
-  
+  const token = request.headers.authorization;
 }
