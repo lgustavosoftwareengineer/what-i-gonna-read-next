@@ -15,7 +15,8 @@ export default {
       const user = await userRepository.findOneOrFail({ where: { email } });
 
       if (user) {
-        if (bcrypt.compare(password, user.password)) {
+        const passwordIsEqual = await bcrypt.compare(password, user.password);
+        if (passwordIsEqual) {
           const token = jwt.sign(
             { userId: user.id, username: user.name },
             authConfigs.jwt.jwtSecret,
@@ -44,9 +45,10 @@ export default {
         });
       }
     } catch (err) {
+      console.log(err.message);
       return dump({
         codeParam: 400,
-        jsonParam: { msg: err.message },
+        jsonParam: { error: true },
         response,
       });
     }
@@ -75,9 +77,10 @@ export default {
         response,
       });
     } catch (err) {
+      console.log(err.message);
       return dump({
         codeParam: 400,
-        jsonParam: { msg: `${err.message}` },
+        jsonParam: { error: true },
         response,
       });
     }
